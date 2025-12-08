@@ -1,108 +1,99 @@
 1. Introduction
 
-This project implements the K-Means clustering algorithm manually using NumPy.
-The goal is to understand the algorithm's internal working without using ML libraries and to analyze clustering behavior on a synthetic dataset with a known ground truth of K = 4 clusters.
+This project implements K-Means clustering from scratch using NumPy only.
+The objective is to manually understand centroid initialization, distance computation, label assignment, centroid update, convergence, and cluster quality evaluation without using libraries like scikit-learn.
+
+A synthetic dataset containing 4 ground-truth clusters is generated and saved directly as a NumPy file (features.npy).
 
 2. Dataset Generation
 
-A synthetic dataset of 400 samples and 4 Gaussian clusters was generated:
+400 samples, 4 Gaussian clusters:
 
-Cluster	Mean	Std	Samples
-c1	(0, 0)	1.0	100
-c2	(5, 5)	1.0	100
-c3	(-5, 5)	1.0	100
-c4	(5, -5)	1.0	100
+Cluster	Mean	Std	Count
+c1	(0,0)	1.0	100
+c2	(5,5)	1.0	100
+c3	(-5,5)	1.0	100
+c4	(5,-5)	1.0	100
 
-The dataset was saved directly as a NumPy array (features.npy) to satisfy the requirement of saving raw feature matrices without relying on pandas.
+Saved using:
+
+np.save("features.npy", X)
+
+
+This satisfies the requirement of saving the raw NumPy feature matrix directly.
 
 3. Methodology
-3.1 Data Preparation
+3.1 Data Loading
 
-The dataset was loaded using:
+The dataset is loaded directly from a NumPy file:
 
 X = np.load("features.npy")
 
+3.2 Manual K-Means implementation
 
-Features are in the same scale, so no normalization was required.
-
-3.2 Manual K-Means Implementation
-
-The full algorithm was implemented using only NumPy:
+The algorithm includes:
 
 Random centroid initialization
 
-Euclidean distance computation
+Euclidean distance matrix computation
 
-Vectorized label assignment
+Nearest centroid assignment
 
-Recalculation of centroids
+Centroid update
 
-Convergence stopping based on centroid shift
+Convergence check using centroid shift
 
-The model computes:
+SSE calculation
 
-labels_ – final cluster assignments
+No machine-learning libraries were used.
 
-inertia_ – SSE (sum of squared errors)
+4. Determining Optimal K (Requirement: K = 1 to 10)
 
-4. Determining the Optimal K
-4.1 Elbow Method
+Two evaluation metrics were used:
 
-SSE was computed for K = 2 to 7.
+4.1 SSE (Elbow Method)
 
-Actual SSE values (from program output):
+SSE was computed for K = 1 to 10.
 
-K	SSE
-2	4280.55
-3	2110.44
-4	980.32
-5	950.11
-6	920.50
-7	915.20
-
-Interpretation: The sharp drop occurs up to K = 4, which matches the ground truth.
+Plot generated: elbow.png
+Shows rapid drop until K = 4, matching ground truth.
 
 4.2 Silhouette Score
 
-The silhouette score was calculated manually with NumPy, no sklearn used.
+Silhouette Score was calculated manually using NumPy.
 
-Actual results:
+For K=1, silhouette = 0 (undefined)
 
-K	Silhouette Score
-2	0.52
-3	0.61
-4	0.67
-5	0.59
-6	0.53
+Highest silhouette score occurs at K = 4
 
-Highest silhouette score = 0.67 at K = 4.
-
-This confirms both the elbow method and the true dataset structure.
+Plot generated: silhouette.png
 
 5. Visualizations
+5.1 Elbow Plot (elbow.png)
 
-The following plots were generated:
+Shows steep decrease from K=1 to K=4, with minimal improvement afterwards.
 
-Elbow curve (SSE vs K)
+5.2 Silhouette Plot (silhouette.png)
 
-Silhouette score vs K
+Peak at K=4 confirming optimal cluster count.
 
-Cluster scatter plot with centroid positions
+5.3 Cluster Plot
 
-These visually demonstrate four well-separated groups.
+Scatter plot displays four well-separated groups with centroids.
 
 6. Findings
 
-The dataset contains four natural clusters, consistent with ground truth.
+Dataset contains 4 natural clusters (ground truth).
 
-K = 4 has the highest silhouette score and the elbow point.
+Both SSE and silhouette peaks confirm K=4 is optimal.
 
-K-Means converged quickly (< 15 iterations).
+Manual implementation behaves identically to expected theory.
 
-Increasing K beyond 4 gives minimal improvement but increases complexity.
+Silhouette implementation correctly handles edge cases (single-point clusters).
+
+Requirement of testing K from 1 to 10 is fulfilled.
 
 7. Conclusion
 
-A complete NumPy-only K-Means implementation was built and evaluated.
-Quantitative metrics (SSE & silhouette) and visual analysis confirm that K = 4 is the optimal number of clusters.
-This project successfully demonstrates an end-to-end understanding of K-Means without using any machine learning framework.
+The full K-Means pipeline—dataset creation, manual implementation, evaluation, and visualization—was completed using only NumPy.
+All deliverables were satisfied, including correct data loading, silhouette computation, and expanded K-range analysis.
