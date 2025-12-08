@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from kmeans import KMeans
-from silhouette import silhouette_score_numpy
+from silhouette_score_numpy import silhouette_score_numpy
 
 df = pd.read_csv("data.csv")
 X = df.values
