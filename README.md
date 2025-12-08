@@ -75,6 +75,3 @@ Overall, the experiment demonstrates the full K-Means workflow and confirms that
 
 A complete NumPy-only implementation of the K-Means algorithm was developed and tested on a synthetic dataset. The project includes dataset creation, clustering, evaluation of cluster quality, and visualization. The analysis consistently indicates that three clusters provide the best fit. This study reinforces fundamental concepts in unsupervised learning and demonstrates the internal mechanics of K-Means without relying on external machine learning libraries.
 
-7. Conclusion
-
-A complete NumPy-only implementation of the K-Means algorithm was developed and tested on a synthetic dataset. The project includes dataset creation, clustering, evaluation of cluster quality, and visualization. The analysis consistently indicates that three clusters provide the best fit. This study reinforces fundamental concepts in unsupervised learning and demonstrates the internal mechanics of K-Means without relying on external machine learning libraries.
