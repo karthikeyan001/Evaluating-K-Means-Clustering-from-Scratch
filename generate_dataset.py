@@ -1,5 +1,5 @@
 import numpy as np
-import pandas as pd
+
 
 def generate_data():
     np.random.seed(42)
