@@ -9,20 +9,15 @@ class KMeans:
 
     def fit(self, X):
         np.random.seed(self.random_state)
-
         indices = np.random.choice(len(X), self.k, replace=False)
-        self.centroids = X[indices]
+        self.centroids = X[indices].astype(float)
 
         for _ in range(self.max_iter):
-
-            distances = np.sqrt(
-                ((X[:, None, :] - self.centroids[None, :, :]) ** 2).sum(axis=2)
-            )
+            distances = np.sqrt(((X[:, None, :] - self.centroids[None, :, :]) ** 2).sum(axis=2))
             labels = np.argmin(distances, axis=1)
 
             new_centroids = np.array([
-                X[labels == i].mean(axis=0) if np.any(labels == i)
-                else self.centroids[i]
+                X[labels == i].mean(axis=0) if np.any(labels == i) else self.centroids[i]
                 for i in range(self.k)
             ])
 
@@ -33,12 +28,9 @@ class KMeans:
                 break
 
         self.labels_ = labels
-        self.inertia_ = ((X - self.centroids[labels]) ** 2).sum()
-
+        self.inertia_ = float(((X - self.centroids[labels]) ** 2).sum())
         return self
 
     def predict(self, X):
-        distances = np.sqrt(
-            ((X[:, None, :] - self.centroids[None, :, :]) ** 2).sum(axis=2)
-        )
+        distances = np.sqrt(((X[:, None, :] - self.centroids[None, :, :]) ** 2).sum(axis=2))
         return np.argmin(distances, axis=1)
